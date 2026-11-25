@@ -14,7 +14,15 @@ ENTRY = (
 )
 
 
+def _check_entry(text: str) -> None:
+    """Validation guard: entry must be a single non-blank line, 1-200 chars."""
+    assert isinstance(text, str) and text.strip(), "entry must be non-blank"
+    assert "\n" not in text and "\r" not in text, "entry must be single-line"
+    assert 1 <= len(text) <= 200, "entry must be 1-200 chars"
+
+
 def main() -> None:
+    _check_entry(ENTRY)
     os.makedirs("/output", exist_ok=True)
     with open("/output/entry.txt", "w", encoding="utf-8", newline="\n") as f:
         f.write(ENTRY)
